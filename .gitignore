@@ -1,0 +1,48 @@
+# Environment files
+.env
+
+# Configuration files with credentials
+config/database.php
+
+# Uploads and user data
+uploads/*
+!uploads/.gitkeep
+
+# Debug and test files
+api/debug.php
+api/test-connection.php
+error.log
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+error_log
+php_errors.log
+
+# Temporary files
+*.tmp
+*.cache
+*.bak
+*.swp
+*~
+
+# Dependencies
+vendor/
+composer.lock
+node_modules/
+
+# Backups
+*.sql.backup
+*.sql.bak
+backup_*
+

@@ -1,0 +1,35 @@
+{
+  "name": "tridah-budget-tracker",
+  "version": "1.0.0",
+  "description": "A free, open-source budget tracking application for personal and business finance management",
+  "main": "index.html",
+  "scripts": {
+    "dev": "php -S localhost:8000",
+    "lint": "echo 'Linting not configured yet'",
+    "test": "echo 'Testing not configured yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TridahCloud/BudgetTracker.git"
+  },
+  "keywords": [
+    "budget",
+    "finance",
+    "tracking",
+    "expense",
+    "income",
+    "budgeting",
+    "money-management",
+    "personal-finance",
+    "business-finance"
+  ],
+  "author": "Tridah <info@tridah.cloud> (https://tridah.cloud)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TridahCloud/BudgetTracker/issues"
+  },
+  "homepage": "https://github.com/TridahCloud/BudgetTracker#readme",
+  "dependencies": {},
+  "devDependencies": {}
+}
+

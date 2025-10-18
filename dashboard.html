@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Tridah Budget Tracker</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="tridah icon.png" alt="Tridah Logo" class="logo">
+            <span class="brand-name">Tridah Budget</span>
+        </div>
+        
+        <!-- Tracker Management Section -->
+        <div class="tracker-section">
+            <div class="tracker-header">
+                <span class="tracker-label">Your Trackers</span>
+            </div>
+            
+            <!-- Tracker List -->
+            <div id="trackerListSidebar" class="tracker-list-sidebar">
+                <!-- Trackers will be loaded here -->
+            </div>
+            
+            <!-- Add New Tracker Button -->
+            <div class="tracker-add">
+                <button class="btn btn-sm btn-outline btn-block" onclick="showCreateTrackerModal(event)">
+                    <i class="fas fa-plus"></i> New Tracker
+                </button>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="#transactions" class="nav-item" onclick="showSection('transactions')">
+                <i class="fas fa-exchange-alt"></i> Transactions
+            </a>
+            <a href="#budgets" class="nav-item" onclick="showSection('budgets')">
+                <i class="fas fa-chart-pie"></i> Budgets
+            </a>
+            <a href="#income-sources" class="nav-item" onclick="showSection('income-sources')">
+                <i class="fas fa-wallet"></i> Income Sources
+            </a>
+            <a href="#goals" class="nav-item" onclick="showSection('goals')">
+                <i class="fas fa-bullseye"></i> Goals
+            </a>
+            <a href="#reports" class="nav-item" onclick="showSection('reports')">
+                <i class="fas fa-chart-line"></i> Reports
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">User</div>
+                    <div class="user-email" id="userEmail">user@email.com</div>
+                </div>
+            </div>
+            <button class="btn btn-outline btn-block" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="content-section active">
+            <div class="section-header">
+                <h1>Dashboard Overview</h1>
+                <div class="date-filter">
+                    <select id="periodFilter" onchange="updateDashboard()">
+                        <option value="this-month">This Month</option>
+                        <option value="last-month">Last Month</option>
+                        <option value="this-year">This Year</option>
+                        <option value="last-year">Last Year</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="summary-card income-card">
+                    <div class="card-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-label">Total Income</div>
+                        <div class="card-value" id="totalIncome">$0.00</div>
+                    </div>
+                </div>
+                <div class="summary-card expense-card">
+                    <div class="card-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-label">Total Expenses</div>
+                        <div class="card-value" id="totalExpenses">$0.00</div>
+                    </div>
+                </div>
+                <div class="summary-card savings-card">
+                    <div class="card-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-label">Net Savings</div>
+                        <div class="card-value" id="netSavings">$0.00</div>
+                    </div>
+                </div>
+                <div class="summary-card budget-card clickable" onclick="showSection('budgets')">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-label">Budget Status</div>
+                        <div class="card-value" id="budgetStatus">No Budgets</div>
+                        <div class="card-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="budgetProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <small style="color: var(--gray-500); font-size: 0.75rem;">Click to manage budgets</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Expense Breakdown</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="expenseChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Income vs Expenses</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="incomeExpenseChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="recent-transactions">
+                <div class="card-header">
+                    <h3>Recent Transactions</h3>
+                    <button class="btn btn-sm btn-primary" onclick="showSection('transactions')">View All</button>
+                </div>
+                <div id="recentTransactionsList" class="transactions-list">
+                    <div class="empty-state">
+                        <i class="fas fa-receipt"></i>
+                        <p>No transactions yet</p>
+                        <button class="btn btn-primary" onclick="showAddTransactionModal()">Add Transaction</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transactions Section -->
+        <section id="transactions-section" class="content-section">
+            <div class="section-header">
+                <h1>Transactions</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddTransactionModal()">
+                        <i class="fas fa-plus"></i> Add Transaction
+                    </button>
+                </div>
+            </div>
+
+            <div class="transaction-tabs">
+                <button class="tab-btn active" onclick="switchTransactionTab('all')">All</button>
+                <button class="tab-btn" onclick="switchTransactionTab('income')">Income</button>
+                <button class="tab-btn" onclick="switchTransactionTab('expense')">Expenses</button>
+            </div>
+
+            <div id="transactionsList" class="transactions-list">
+                <!-- Transactions will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Budgets Section -->
+        <section id="budgets-section" class="content-section">
+            <div class="section-header">
+                <h1>Budget Planning</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddBudgetModal()">
+                        <i class="fas fa-plus"></i> Create Budget
+                    </button>
+                </div>
+            </div>
+
+            <div id="budgetsList" class="budgets-grid">
+                <!-- Budgets will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Income Sources Section -->
+        <section id="income-sources-section" class="content-section">
+            <div class="section-header">
+                <h1>Income Sources</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddIncomeSourceModal()">
+                        <i class="fas fa-plus"></i> Add Income Source
+                    </button>
+                </div>
+            </div>
+
+            <div id="incomeSourcesList" class="income-sources-grid">
+                <!-- Income sources will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section id="goals-section" class="content-section">
+            <div class="section-header">
+                <h1>Financial Goals</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddGoalModal()">
+                        <i class="fas fa-plus"></i> Add Goal
+                    </button>
+                </div>
+            </div>
+
+            <div id="goalsList" class="goals-grid">
+                <div class="empty-state">
+                    <i class="fas fa-bullseye"></i>
+                    <p>No goals set yet</p>
+                    <button class="btn btn-primary" onclick="showAddGoalModal()">Create Your First Goal</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports-section" class="content-section">
+            <div class="section-header">
+                <h1>Financial Reports</h1>
+                <div class="header-actions">
+                    <select id="reportPeriod" onchange="updateReports()">
+                        <option value="6">Last 6 Months</option>
+                        <option value="12" selected>Last 12 Months</option>
+                        <option value="24">Last 24 Months</option>
+                    </select>
+                    <button class="btn btn-outline" onclick="exportReports()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Stats -->
+            <div class="report-summary">
+                <div class="report-stat-card">
+                    <div class="report-stat-label">Average Monthly Income</div>
+                    <div class="report-stat-value" id="avgIncome">$0</div>
+                </div>
+                <div class="report-stat-card">
+                    <div class="report-stat-label">Average Monthly Expenses</div>
+                    <div class="report-stat-value" id="avgExpenses">$0</div>
+                </div>
+                <div class="report-stat-card">
+                    <div class="report-stat-label">Average Savings</div>
+                    <div class="report-stat-value" id="avgSavings">$0</div>
+                </div>
+                <div class="report-stat-card">
+                    <div class="report-stat-label">Savings Rate</div>
+                    <div class="report-stat-value" id="savingsRate">0%</div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="reports-grid">
+                <!-- Monthly Trend -->
+                <div class="chart-card full-width">
+                    <div class="card-header">
+                        <h3>Income vs Expenses Trend</h3>
+                        <span class="chart-subtitle">Track your financial journey over time</span>
+                    </div>
+                    <div class="chart-container-large">
+                        <canvas id="monthlyTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Expense Breakdown by Category -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Expense Categories</h3>
+                        <span class="chart-subtitle">Where your money goes</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="categoryPieChart"></canvas>
+                    </div>
+                    <div id="categoryBreakdownList" class="breakdown-list">
+                        <!-- Category list will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Income Sources Breakdown -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Income Sources</h3>
+                        <span class="chart-subtitle">Revenue streams</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="incomeSourceChart"></canvas>
+                    </div>
+                    <div id="incomeBreakdownList" class="breakdown-list">
+                        <!-- Income list will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Net Savings Over Time -->
+                <div class="chart-card full-width">
+                    <div class="card-header">
+                        <h3>Net Savings Trend</h3>
+                        <span class="chart-subtitle">Your wealth accumulation</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="savingsTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add Transaction Modal -->
+    <div id="addTransactionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addTransactionModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Add Transaction</h2>
+            </div>
+            <form id="addTransactionForm" onsubmit="handleAddTransaction(event)">
+                <div class="form-group">
+                    <label>Transaction Type</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="transaction_type" value="income" onchange="toggleTransactionFields()"> Income
+                        </label>
+                        <label>
+                            <input type="radio" name="transaction_type" value="expense" checked onchange="toggleTransactionFields()"> Expense
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="transaction-amount">Amount</label>
+                    <input type="number" id="transaction-amount" name="amount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="transaction-date">Date</label>
+                    <input type="date" id="transaction-date" name="transaction_date" required>
+                </div>
+                <div class="form-group" id="categoryField">
+                    <label for="transaction-category">Category</label>
+                    <select id="transaction-category" name="category_id">
+                        <!-- Categories will be loaded dynamically -->
+                    </select>
+                </div>
+                <div class="form-group" id="sourceField" style="display: none;">
+                    <label for="transaction-source">Income Source</label>
+                    <select id="transaction-source" name="source_id">
+                        <!-- Sources will be loaded dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transaction-description">Description</label>
+                    <input type="text" id="transaction-description" name="description">
+                </div>
+                <div class="form-group">
+                    <label for="transaction-notes">Notes</label>
+                    <textarea id="transaction-notes" name="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-plus"></i> Add Transaction
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Budget Modal -->
+    <div id="addBudgetModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addBudgetModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Create Budget</h2>
+            </div>
+            <form id="addBudgetForm" onsubmit="handleAddBudget(event)">
+                <div class="form-group">
+                    <label for="budget-name">Budget Name</label>
+                    <input type="text" id="budget-name" name="budget_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="budget-amount">Amount</label>
+                    <input type="number" id="budget-amount" name="amount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="budget-period">Period</label>
+                    <select id="budget-period" name="period">
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly" selected>Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="annually">Annually</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="budget-start">Start Date</label>
+                    <input type="date" id="budget-start" name="start_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="budget-type">Budget Type</label>
+                    <select id="budget-type" name="budget_type">
+                        <option value="personal">Personal</option>
+                        <option value="business">Business</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-plus"></i> Create Budget
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Tracker Modal -->
+    <div id="createTrackerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('createTrackerModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Create New Tracker</h2>
+                <p>Organize your finances with multiple trackers</p>
+            </div>
+            <form id="createTrackerForm" onsubmit="handleCreateTracker(event)">
+                <div class="form-group">
+                    <label for="tracker-name">Tracker Name</label>
+                    <input type="text" id="tracker-name" name="tracker_name" required 
+                           placeholder="e.g., Personal Budget, Business Expenses">
+                </div>
+                <div class="form-group">
+                    <label for="tracker-type">Type</label>
+                    <select id="tracker-type" name="tracker_type">
+                        <option value="personal">Personal</option>
+                        <option value="business">Business</option>
+                        <option value="family">Family</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tracker-icon">Icon (Emoji)</label>
+                    <input type="text" id="tracker-icon" name="icon" 
+                           placeholder="💰" maxlength="2" value="💰">
+                    <div class="icon-suggestions">
+                        <button type="button" class="icon-btn" onclick="setTrackerIcon('💰')">💰</button>
+                        <button type="button" class="icon-btn" onclick="setTrackerIcon('💼')">💼</button>
+                        <button type="button" class="icon-btn" onclick="setTrackerIcon('👨‍👩‍👧‍👦')">👨‍👩‍👧‍👦</button>
+                        <button type="button" class="icon-btn" onclick="setTrackerIcon('🏠')">🏠</button>
+                        <button type="button" class="icon-btn" onclick="setTrackerIcon('📊')">📊</button>
+                        <button type="button" class="icon-btn" onclick="setTrackerIcon('🚀')">🚀</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="tracker-color">Color</label>
+                    <input type="color" id="tracker-color" name="color" value="#6366f1">
+                </div>
+                <div class="form-group">
+                    <label for="tracker-description">Description (Optional)</label>
+                    <textarea id="tracker-description" name="description" rows="2" 
+                              placeholder="What will you track in this workspace?"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-plus"></i> Create Tracker
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Income Source Modal -->
+    <div id="addIncomeSourceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addIncomeSourceModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Add Income Source</h2>
+            </div>
+            <form id="addIncomeSourceForm" onsubmit="handleAddIncomeSource(event)">
+                <div class="form-group">
+                    <label for="source-name">Source Name</label>
+                    <input type="text" id="source-name" name="source_name" required placeholder="e.g., Main Job, Freelance, Side Business">
+                </div>
+                <div class="form-group">
+                    <label for="source-type">Source Type</label>
+                    <select id="source-type" name="source_type" required>
+                        <option value="salary">Salary</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="side_hustle">Side Hustle</option>
+                        <option value="business">Business</option>
+                        <option value="investment">Investment</option>
+                        <option value="rental">Rental</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="source-description">Description</label>
+                    <textarea id="source-description" name="description" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="source-recurring" name="is_recurring" value="1">
+                        Recurring Income
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="source-expected">Expected Amount (Monthly)</label>
+                    <input type="number" id="source-expected" name="expected_amount" step="0.01">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-plus"></i> Add Income Source
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>
+

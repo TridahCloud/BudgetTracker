@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tridah Budget Tracker - Free Online Budget Management</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="landing-page">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="tridah icon.png" alt="Tridah Logo" class="logo">
+                <span class="brand-name">Tridah Budget Tracker</span>
+            </div>
+            <div class="nav-links">
+                <button class="btn btn-outline" onclick="showLoginModal()">Login</button>
+                <button class="btn btn-primary" onclick="showRegisterModal()">Get Started Free</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Take Control of Your Finances</h1>
+                <p class="hero-subtitle">Track income, manage expenses, and achieve your financial goals with our comprehensive budgeting suite. Free forever.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" onclick="showRegisterModal()">
+                        <i class="fas fa-rocket"></i> Start Budgeting Now
+                    </button>
+                    <button class="btn btn-outline btn-large" onclick="document.querySelector('.features').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Free</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Transactions</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Access</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Everything You Need to Budget Smarter</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Multiple Income Sources</h3>
+                    <p>Track salary, freelance work, side hustles, and business income all in one place.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Smart Categorization</h3>
+                    <p>Automatically categorize expenses and visualize spending patterns with beautiful charts.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Budget Goals</h3>
+                    <p>Set budget limits, track progress, and get alerts before you overspend.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Business & Personal</h3>
+                    <p>Manage both personal and business finances with separate tracking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>Access your budget from any device - desktop, tablet, or mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Private</h3>
+                    <p>Your financial data is encrypted and secure. We never share your information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Finances?</h2>
+            <p>Join thousands of users taking control of their money. It's completely free.</p>
+            <button class="btn btn-primary btn-large" onclick="showRegisterModal()">
+                <i class="fas fa-user-plus"></i> Create Free Account
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="tridah icon.png" alt="Tridah Logo" class="logo">
+                    <p>Created and maintained by <a href="https://tridah.cloud" target="_blank">Tridah</a>, a non-profit organization.</p>
+                    <p class="github-link">
+                        <i class="fab fa-github"></i> 
+                        Open source on <a href="https://github.com/TridahCloud/BudgetTracker" target="_blank">GitHub</a>
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/TridahCloud/BudgetTracker" target="_blank">Documentation</a></li>
+                        <li><a href="https://github.com/TridahCloud/BudgetTracker/issues" target="_blank">Report Issue</a></li>
+                        <li><a href="https://github.com/TridahCloud/BudgetTracker/blob/main/LICENSE" target="_blank">License</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tridah. Free and open source forever.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <div class="modal-header">
+                <img src="tridah icon.png" alt="Tridah Logo" class="modal-logo">
+                <h2>Welcome Back</h2>
+                <p>Login to your Tridah Budget Tracker account</p>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <!-- Google OAuth - Uncomment when configured
+                <div class="divider">or</div>
+                <button type="button" class="btn btn-google btn-block" onclick="loginWithGoogle()">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                -->
+            </form>
+            <div class="modal-footer">
+                Don't have an account? <a href="#" onclick="closeModal('loginModal'); showRegisterModal()">Sign up free</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <div class="modal-header">
+                <img src="tridah icon.png" alt="Tridah Logo" class="modal-logo">
+                <h2>Create Your Account</h2>
+                <p>Start budgeting smarter today - it's free!</p>
+            </div>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" name="full_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" name="password" minlength="8" required>
+                    <small>At least 8 characters</small>
+                </div>
+                <div class="form-group">
+                    <label for="account-type">Account Type</label>
+                    <select id="account-type" name="account_type">
+                        <option value="personal">Personal</option>
+                        <option value="business">Business</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+                <!-- Google OAuth - Uncomment when configured
+                <div class="divider">or</div>
+                <button type="button" class="btn btn-google btn-block" onclick="loginWithGoogle()">
+                    <i class="fab fa-google"></i> Sign up with Google
+                </button>
+                -->
+            </form>
+            <div class="modal-footer">
+                Already have an account? <a href="#" onclick="closeModal('registerModal'); showLoginModal()">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
+
