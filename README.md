@@ -41,8 +41,6 @@
 ### 💳 Smart Expense Management
 - **Automatic Categorization**: Pre-configured categories with the option to create custom ones
 - **Transaction History**: Complete record of all your expenses
-- **Receipt Storage**: Upload and store receipt images (coming soon)
-- **Payment Method Tracking**: Track cash, credit card, bank transfers, and digital wallets
 
 ### 📊 Budget Planning
 - **Flexible Budgets**: Create budgets by category, time period, or overall spending
@@ -52,9 +50,8 @@
 
 ### 🎯 Financial Goals
 - **Savings Goals**: Set and track savings targets
-- **Debt Reduction**: Monitor debt payment progress
-- **Investment Planning**: Track investment goals
-- **Custom Goals**: Create any type of financial goal
+- **Debt Reduction**: Monitor debt payment progress (Coming Soon)
+- **Custom Goals**: Create any type of financial goal (Coming Soon)
 
 ### 📈 Interactive Reports
 - **Visual Charts**: Beautiful, interactive charts powered by Chart.js
@@ -65,7 +62,6 @@
 
 ### 🔐 Security & Privacy
 - **Secure Authentication**: Email/password login with bcrypt hashing
-- **Google SSO**: Quick login with Google OAuth (integration ready)
 - **Session Management**: Secure session handling
 - **Data Privacy**: Your data is encrypted and never shared
 
@@ -179,34 +175,6 @@ See `database/schema.sql` for complete schema details.
 ### Libraries & Tools
 - **Font Awesome**: Icons
 - **Chart.js**: Interactive charts
-- **Google OAuth**: SSO authentication (optional)
-
----
-
-## 📁 Project Structure
-
-```
-BudgetTracker/
-├── api/
-│   ├── auth/              # Authentication endpoints
-│   ├── budgets/           # Budget management
-│   ├── categories/        # Category management
-│   ├── classes/           # PHP classes
-│   ├── income-sources/    # Income source management
-│   └── transactions/      # Transaction management
-├── assets/
-│   ├── css/              # Stylesheets
-│   └── js/               # JavaScript files
-├── config/
-│   ├── config.php        # Main configuration
-│   └── database.php      # Database configuration
-├── database/
-│   └── schema.sql        # Database schema
-├── uploads/              # User uploaded files
-├── dashboard.html        # Dashboard interface
-├── index.html           # Landing page
-└── README.md            # This file
-```
 
 ---
 
@@ -234,20 +202,6 @@ GOOGLE_CLIENT_SECRET=your_client_secret
 # Security
 ENCRYPTION_KEY=your_random_key_here
 ```
-
-### Google OAuth Setup (Optional)
-
-**Quick Setup:**
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project
-3. Enable Google+ API
-4. Create OAuth 2.0 credentials
-5. Add authorized redirect URI: `http://your-domain.com/api/auth/google-callback.php`
-6. Copy Client ID and Client Secret to your `.env` file
-
-**📖 [Complete Google OAuth Setup Guide](GOOGLE_OAUTH_SETUP.md)** - Step-by-step instructions with screenshots and troubleshooting.
-
----
 
 ## 🤝 Contributing
 
