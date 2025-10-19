@@ -6,9 +6,28 @@
   <h3>Free Online Budget Management Suite</h3>
   <p>A comprehensive, modern budgeting application for personal and business finance tracking.</p>
   
+  <p><strong>🌐 Use it now for FREE: <a href="https://budgettracker.tridah.cloud/">budgettracker.tridah.cloud</a></strong></p>
+  
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
   [![Maintained by Tridah](https://img.shields.io/badge/Maintained%20by-Tridah-blueviolet)](https://tridah.cloud)
+  [![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://budgettracker.tridah.cloud)
 </div>
+
+---
+
+## 🚀 Try It Now
+
+**No installation needed!** Use the hosted version for free:
+
+👉 **[budgettracker.tridah.cloud](https://budgettracker.tridah.cloud/)** 👈
+
+- ✅ **100% Free** - No subscriptions, no hidden costs
+- ✅ **No download required** - Use in your browser
+- ✅ **Secure** - Your data is encrypted and private
+- ✅ **Always updated** - Latest features automatically
+- ✅ **Mobile friendly** - Works on any device
+
+**Or** self-host your own instance using the code below!
 
 ---
 
@@ -60,13 +79,23 @@
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Use the Hosted Version (Easiest!)
+
+Simply visit **[budgettracker.tridah.cloud](https://budgettracker.tridah.cloud/)** and create a free account!
+
+No installation, no setup - just start budgeting! 🎉
+
+### Option 2: Self-Host (Full Control)
+
+Want to run your own instance? Follow these steps:
+
+#### Prerequisites
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
 - Web server (Apache/Nginx)
 - Modern web browser
 
-### Installation
+#### Installation
 
 1. **Clone the repository**
    ```bash
@@ -290,9 +319,11 @@ To provide high-quality, free software that empowers individuals and organizatio
 
 Need help? Have questions?
 
+- **Live App**: [budgettracker.tridah.cloud](https://budgettracker.tridah.cloud/)
 - **Documentation**: Check this README and inline code comments
 - **Issues**: [GitHub Issues](https://github.com/TridahCloud/BudgetTracker/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/TridahCloud/BudgetTracker/discussions)
+- **Website**: [tridah.cloud](https://tridah.cloud)
 
 ---
 
